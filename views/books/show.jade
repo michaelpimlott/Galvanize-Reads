@@ -1,0 +1,26 @@
+extends ../layout
+
+block content
+  include ../bar/sidebar
+  div.row-fluid
+    div.col-md-1.col-sm-1.col-xs-1
+    div.row-fluid
+      div.col-md-9.col-sm-9.col-xs-9
+        if book
+          div.media
+            div.media-left
+              a(href="#{book.cover_url}")
+                img.bookImageUrl(src="#{book.cover_url}" alt="bookImage")
+            div.media-body
+              h4.hfourHeading= book.title
+              each author in authors
+                if book.id == author.book_id
+                  p
+                    a.linkstoauthshow(href="/authors/#{author.author_id}")= author.first_name + " " + author.last_name
+              h5= book.genre
+              p= book.description
+              form(action="/books/#{book.id}/delete" method="post")
+                button.removeBookButton.btn.btn-primary.btn-xs(class="buttons" type="submit" action="/books/#{book.id}/delete" method="post") Remove Book
+                a.editBookButton.editBookButtonMargin.btn.btn-primary.btn-xs(class="buttons" href="/books/#{book.id}/edit" role="button") Edit Book
+            each author in authors
+              if book.id == author.book_id

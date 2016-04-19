@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  include ../bar/sidebar
+  a(class="link" href="authors/form") Add Author
+  div.row-fluid
+      div.col-md-1.col-sm-1.col-xs-1
+      div.row-fluid
+        div.col-md-9.col-sm-9.col-xs-9
+          if user
+            a.addnewauthsbutton.btn.btn-success(href="/authors/form" role="button") Add A New Author
+          each author, i in authors
+            div.media
+              div.media-left
+                a(href="#{author.portrait_url}")
+                  img.portraitImageUrl(src="#{author.portrait_url}" alt="authorImage")
+              div.media-body.thumbnail.thumbnailstyle
+                h4.hfourHeading
+                  a.showAuthPageLink(href="/authors/#{author.id}")= author.first_name + " " + author.last_name
+                div.media
+                  h5.greenme= "Books written by " + author.first_name + " " + author.last_name + ":"
+                  each book in books
+                    if author.id == book.author_id
+                      a.linkshowpage(href="/books/#{book.id}")= book.title
+                      br
+                  p.authorBiography= author.biography

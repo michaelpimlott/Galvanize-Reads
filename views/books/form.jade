@@ -1,0 +1,43 @@
+extends ../layout
+
+block content
+  include ../bar/sidebar
+  div.row-fluid
+      div.col-md-1.col-sm-1.col-xs-1
+      div.row-fluid
+        div.col-md-5.col-sm-5.col-xs-5
+          form(method="POST" action='/books/form')
+            div.errors
+              if errors
+                for error in errors
+                  p.errorMessage= error
+            if book
+              fieldset.form-group
+                label(for="title") Title
+                input.form-control(type="text" id="title" placeholder="Book Title" name="title" value=book.title)
+              fieldset.form-group
+                label(for="genre") Genre
+                input.form-control(type="text" id="genre" placeholder="Genre" name="genre" value=book.genre)
+              fieldset.form-group
+                label(for="cover_url") Cover Image URL
+                input.form-control(type="text" id="cover_url" placeholder="Cover Image URL" name="cover_url" value=book.cover_url)
+              fieldset.form-group
+                label(for="description") Description
+                textarea.form-control(placeholder="description" rows="5" type="text" id="description" name="description")= book.description
+              fieldset.form-group
+                div.row
+                  div.col-md-9.col-sm-9.col-xs-9
+                    div#appendedtext
+
+              fieldset.form-group
+                div.row
+                  div.col-md-9.col-sm-9.col-xs-10
+                    select.form-control(id="authors" name="author_id")
+                      each author in authors
+                        option(value=author.id)= author.first_name + " " + author.last_name
+                  div.col-md-3.col-sm-3.col-xs-4
+                    button#addAuthButtonID.btn-primary.btn-group-sm.addAuthorButton(class="buttons" type="button" role="group") Add Author
+
+              fieldset.form-group
+                div.col-md-12.col-sm-12.col-xs-12
+                button.btn-primary.btn-group-sm.addBookButton(class="buttons" type="submit" role="group") Add Book

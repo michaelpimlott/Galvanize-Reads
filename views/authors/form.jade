@@ -1,0 +1,29 @@
+extends ../layout
+
+block content
+  include ../bar/sidebar
+  div.row-fluid
+      div.col-md-1.col-sm-1.col-xs-1
+      div.row-fluid
+        div.col-md-5.col-sm-5.col-xs-5
+          form(method="POST" action='/authors/form')
+            div.errors
+              if errors
+                for error in errors
+                  p.errorMessage= error
+            if author
+              fieldset.form-group
+                label(for="first_name") First Name
+                input.form-control(type="text" id="first_name" placeholder="First Name" name="first_name" value=author.first_name)
+              fieldset.form-group
+                label(for="last_name") Last Name
+                input.form-control(type="text" id="last_name" placeholder="Last Name" name="last_name" value=author.last_name)
+              fieldset.form-group
+                label(for="portrait_url") Portrait Image URL
+                input.form-control(type="text" id="portrait_url" placeholder="Portrait Image URL" name="portrait_url" value=author.portrait_url)
+              fieldset.form-group
+                label(for="biography") Biography
+                textarea.form-control(placeholder="Biography" rows="5" type="text" id="biography" name="biography") #{author.biography}
+              fieldset.form-group
+                div.col-md-12.col-sm-12.col-xs-12
+                button.btn-primary.btn-group-sm.addAuthButton(class="buttons" type="submit" role="group") Add Author

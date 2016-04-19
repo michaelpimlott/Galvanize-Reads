@@ -1,0 +1,25 @@
+extends ../layout
+
+block content
+  include ../bar/sidebar
+  a(class="link" href="books/form") Add Book
+  div.row-fluid
+      div.col-md-1.col-sm-1.col-xs-1
+      div.row-fluid
+        div.col-md-9.col-sm-9.col-xs-9
+
+          each book, i in books
+            div.media
+              div.media-left
+                a(href="#{book.cover_url}")
+                  img.bookImageUrl(src="#{book.cover_url}" alt="bookImage")
+              div.media-body.thumbnail.thumbnailstyle
+                h4.hfourHeading
+                  a.showBookPageLink(href="/books/#{book.id}")= book.title
+                each author in authors
+                  if book.id == author.book_id
+                    p
+                      a.linksauthortoauthorshowpage(href="/authors/#{author.author_id}")= author.first_name + " " + author.last_name
+                h5= book.genre
+                p= book.description
+                div#moreauthors
