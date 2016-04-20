@@ -7,24 +7,23 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('cookie-session');
-require('dotenv').load()
 
 var routes = require('./routes/index');
 var galvanizeReads = require('./routes/galvanizeReads');
 var books = require('./routes/books');
 var authors = require('./routes/authors');
-
+var GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
+var passport
 var app = express();
 var knex = require('./db/knex');
+require('dotenv').load()
 
 function Users(){
   return knex('users');
 }
 
-
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -42,14 +41,11 @@ app.use('/galvanizeReads', galvanizeReads);
 app.use('/books', books);
 app.use('/authors', authors);
 
-
-
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
-
 
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
@@ -68,8 +64,6 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
-
 
 
 module.exports = app;
